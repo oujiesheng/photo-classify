@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-照片去重 Web 服务 v3.0
+照片分类 Web 服务 v10.0
 增强：人物、建筑、物件、汽车等类别感知相似度 + 扫描进度接口
 """
 
@@ -880,7 +880,7 @@ class PhotoDedupHandler(SimpleHTTPRequestHandler):
 
 def main():
     server = HTTPServer(('127.0.0.1', PORT), PhotoDedupHandler)
-    print("🚀 照片去重服务 v3.0")
+    print("🚀 照片分类服务 v10.0")
     print(f"   http://127.0.0.1:{PORT}")
     print("   类别感知相似度：人物/建筑/物件/汽车/图表/文档")
     try:
