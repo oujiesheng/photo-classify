@@ -37,7 +37,7 @@ python3 server.py
 ## 📁 项目结构
 
 ```
-photo_dedup/
+photo-classify/
 ├── server.py          # Python 后端服务
 ├── index.html         # Web 前端页面
 ├── app.js             # 前端交互逻辑
