@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>照片去重工具 v2.0</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="container">
+    <!-- Header -->
+    <div class="header">
+      <h1>🖼 照片去重 v3.0</h1>
+      <p class="subtitle">类别感知检测：人物·建筑·物件·汽车·图表 · 支持实时进度</p>
+    </div>
+
+    <!-- 路径输入区 -->
+    <div class="input-section">
+      <div class="path-row">
+        <input type="text" id="folderPath" placeholder="输入照片文件夹路径，如 ~/Desktop/photos">
+        <button class="btn btn-browse" onclick="openBrowser()">📂 浏览</button>
+        <button class="btn btn-clear" onclick="clearPath()">✕</button>
+      </div>
+      
+      <!-- 相似度阈值 -->
+      <div class="threshold-row">
+        <label>相似度阈值：</label>
+        <input type="range" id="threshold" min="50" max="95" value="70" step="5" oninput="updateThreshold()">
+        <span id="thresholdValue">70%</span>
+        <div class="threshold-desc">
+          <span class="tag" data-threshold="50">50% 宽松（找风格类似的）</span>
+          <span class="tag tag-active" data-threshold="70">70% 推荐</span>
+          <span class="tag" data-threshold="90">90% 严格（接近完全相同）</span>
+        </div>
+      </div>
+
+      <div class="action-row">
+        <button class="btn btn-primary btn-large" onclick="startScan()">🔍 开始扫描</button>
+        <div class="upload-area">
+          <button class="btn btn-secondary" onclick="triggerUpload()">📤 上传照片</button>
+          <input type="file" id="fileInput" multiple accept="image/*" style="display:none" onchange="handleUpload(this.files)">
+        </div>
+      </div>
+    </div>
+
+    <!-- 进度条 -->
+    <div class="progress-bar" id="progressBar" style="display:none">
+      <div class="progress-fill" id="progressFill"></div>
+      <span class="progress-text" id="progressText">扫描中...</span>
+    </div>
+
+    <!-- 结果区 -->
+    <div class="results" id="results" style="display:none">
+      <div class="summary" id="summary"></div>
+      <div class="group-actions">
+        <button class="btn btn-secondary" onclick="selectAll()">☑ 全选删除项</button>
+        <button class="btn btn-secondary" onclick="deselectAll()">☐ 取消全选</button>
+        <button class="btn btn-danger" id="deleteBtn" onclick="deleteSelected()" disabled>🗑 删除选中 (<span id="deleteCount">0</span>)</button>
+      </div>
+      <div class="groups" id="groups"></div>
+    </div>
+
+    <!-- 空状态 -->
+    <div class="empty-state" id="emptyState">
+      <div class="empty-icon">📸</div>
+      <p>输入文件夹路径或上传照片开始扫描</p>
+    </div>
+  </div>
+
+  <!-- 文件夹浏览器弹窗 -->
+  <div class="modal" id="browserModal" style="display:none">
+    <div class="modal-content">
+      <div class="modal-header">
+        <span>📂 选择文件夹</span>
+        <button class="btn btn-close" onclick="closeBrowser()">✕</button>
+      </div>
+      <div class="modal-body">
+        <div class="current-path" id="currentPath">/</div>
+        <div class="folder-list" id="folderList"></div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" onclick="closeBrowser()">取消</button>
+        <button class="btn btn-primary" id="selectBtn" onclick="selectFolder()" disabled>✓ 确认选择</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
